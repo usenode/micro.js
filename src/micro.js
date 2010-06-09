@@ -12,13 +12,21 @@ pkg.define('micro', ['node:http', 'promise', 'fs-promise', 'node:sys'], function
         'spv'  : 'text/spectrum-view'
     };
 
-    var WebApp = ns.WebApp = function () {
+    var WebApp = ns.WebApp = function (setup) {
         this.handlers = {
             'GET'    : [],
             'POST'   : [],
             'PUT'    : [],
             'DELETE' : []
         };
+        var webapp = this;
+        setup.call(
+            this,
+            function () { return webapp.get.apply(webapp, arguments); },
+            function () { return webapp.post.apply(webapp, arguments); },
+            function () { return webapp.put.apply(webapp, arguments); },
+            function () { return webapp.del.apply(webapp, arguments); }
+        );
     };
 
     WebApp.prototype.get = function (path, handler, invocant) {
