@@ -1,4 +1,5 @@
 {
     "name" : "micro.js",
-    "libraryNamespace" : "micro"
+    "libraryNamespace" : "micro",
+    "version" : "0.1.0"
 }
