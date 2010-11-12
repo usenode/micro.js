@@ -179,186 +179,223 @@ The following are shortcut methods for settting the status of the response and o
         <td>this.ok(contentType)</td>
         <td>200 OK</td>
         <td>&nbsp;</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.1">10.2.1</a></td>
     </td>
     <tr>
         <td>this.created(contentType, location)</td>
         <td>201 CREATED</td>
         <td>The location parameter contains the URI of the newly created resource.</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.2">10.2.2</a></td>
     </td>
     <tr>
         <td>this.accepted(contentType)</td>
         <td>202 Accepted</td>
         <td>&nbsp;</td>
-    </tr>
-    <tr>
-        <td>this.noContent()</td>
-        <td>204 No Content</td>
-        <td>There is no content-type parameter as there is not content.</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.3">10.2.3</a></td>
     </tr>
     <tr>
         <td>this.nonAuthoritativeInformation(contentType)</td>
         <td>203 Non-Authoritative Information</td>
         <td>&nbsp;</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.4">10.2.4</a></td>
+    </tr>
+    <tr>
+        <td>this.noContent()</td>
+        <td>204 No Content</td>
+        <td>There is no content-type parameter as there is not content.</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.5">10.2.5</a></td>
     </tr>
     <tr>
         <td>this.resetContent()</td>
         <td>205 Reset Content</td>
         <td>There is no content-type parameter as no response body should be included with this response code.</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.6">10.2.6</a></td>
     </tr>
     <tr>
         <td>this.partialContent(contentType, headers)</td>
         <td>206 Partial Content</td>
-        <td>The headers parameter must contain keys and values corresponding to the required parameters as specified (see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.7">Section 10.2.7 of RFC 2616</a>).</td>
+        <td>The headers parameter must contain keys and values corresponding to the required parameters as specified in <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.7">the spec</a>.</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.2.7">10.2.7</a></td>
     </tr>
     <tr>
         <td>this.multipleChoices(contentType, location?)</td>
         <td>300 Multiple Choices</td>
-        <td>The optional location parameter contains the URI of the prefered choise of representation (see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.1">Section 10.3.1 of RFC 2616</a>).</td>
+        <td>The optional location parameter contains the URI of the prefered choice of representation.</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.1">10.3.1</a></td>
     </tr>
     <tr>
         <td>this.movedPermanently(location, contentType?)</td>
         <td>301 Moved Permanently</td>
-        <td>The location parameter contains the URL being redirected to (this can be relative to the requested URL). The content-type parameter is optional and defaults to text/html. A short message and hyperlink is added to the body if a body is not added, as specified by <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.2">Section 10.3.2 of RFC 2616</a>.</td>
+        <td>The location parameter contains the URL being redirected to (this can be relative to the requested URL). The content-type parameter is optional and defaults to text/html. A short message and hyperlink is added to the body if a body is not added.</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.2">10.3.2</a></td>
     </tr>
     <tr>
         <td>this.found(location, contentType?)</td>
         <td>302 Found</td>
-        <td>The location parameter contains the URL being redirected to (this can be relative to the requested URL). The content-type parameter is optional and defaults to text/html. A short message and hyperlink is added to the body if a body is not added, as specified by <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.3">Section 10.3.3 of RFC 2616</a>.</td>
+        <td>The location parameter contains the URL being redirected to (this can be relative to the requested URL). The content-type parameter is optional and defaults to text/html. A short message and hyperlink is added to the body if a body is not added.</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.3">10.3.3</a></td>
     </tr>
     <tr>
         <td>this.seeOther(location, contentType?)</td>
         <td>303 See Other</td>
-        <td>The location parameter contains the URL being referenced (this can be relative to the requested URL). The content-type parameter is optional and defaults to text/html. A short message is added to the body if a body is not added, as specified by <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.4">Section 10.3.4 of RFC 2616</a>.</td>
+        <td>The location parameter contains the URL being referenced (this can be relative to the requested URL). The content-type parameter is optional and defaults to text/html. A short message is added to the body if a body is not added.</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.4">10.3.4</a></td>
     </tr>
     <tr>
         <td>this.notModified(headers)</td>
         <td>304 Not Modified</td>
-        <td>The headers parameter must contain keys and values corresponding to the required parameters as specified (see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.5">Section 10.3.5 of RFC 2616</a>).</td>
+        <td>The headers parameter must contain keys and values corresponding to the required parameters as specified in <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.5">the spec</a>.</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.5">10.3.5</a></td>
     </tr>
     <tr>
         <td>this.useProxy(location)</td>
         <td>305 Use Proxy</td>
         <td>The location parameters should contain the URI of the proxy.</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.6">10.3.6</a></td>
     </tr>
     <tr>
         <td>this.temporaryRedirect(location, contentType?)</td>
         <td>307 Temporary Redirect</td>
-        <td>The location parameter contains the URL being redirected to (this can be relative to the requested URL). The content-type parameter is optional and defaults to text/html. A short message and hyperlink is added to the body if a body is not added, as specified by <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.8">Section 10.3.8 of RFC 2616</a>.</td>
+        <td>The location parameter contains the URL being redirected to (this can be relative to the requested URL). The content-type parameter is optional and defaults to text/html. A short message and hyperlink is added to the body if a body is not added.</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.7">10.3.7</a></td>
     </tr>
     <tr>
         <td>this.badRequest()</td>
         <td>400 Bad Request</td>
         <td>This shouldn't normally be called as a malformed request shouldn't make it to the web appliction.</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.1">10.4.1</a></td>
     </tr>
     <tr>
         <td>this.unauthorized(contentType, wwwAuthenticate)</td>
         <td>401 Unauthorized</td>
-        <td>The wwwAuthenticate parameter should contain the value for the WWW-Authenticate header (as required by <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">Section 10.4.2 of RFC 2616</a></td>).</td>
+        <td>The wwwAuthenticate parameter should contain the value for the WWW-Authenticate header.</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.2">10.4.2</a></td>
     </tr>
     <tr>
         <td>this.forbidden(contentType)</td>
         <td>403 Forbidden</td>
         <td>&nbsp;</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4">10.4.4</a></td>
     </tr>
     <tr>
         <td>this.notFound(contentType)</td>
         <td>404 Not Found</td>
-        <td>&nbsp;</td>
+        <td>&nbsp;</td> 
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.5">10.4.5</a></td>
     </tr>
     <tr>
         <td>this.methodNotAllowed(contentType, methods)</td>
         <td>405 Method Not Allowed</td>
-        <td>The methods parameter is an array containing HTTP methods that are allowed for the "Allow" header (as required by <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.6">Section 10.4.6 of RFC 2616</a></td>).</td>
-    </tr>
+        <td>The methods parameter is an array containing HTTP methods that are allowed for the "Allow" header.</td>
+         <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.6">10.4.6</a></td>
+   </tr>
     <tr>
         <td>this.notAcceptable(contentType)</td>
         <td>406 Not Acceptable</td>
         <td>&nbsp;</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.7">10.4.7</a></td>
     </tr>
     <tr>
         <td>this.proxyAuthenticationRequired(contentType, proxyAuthentciate)</td>
         <td>407 Proxy Authentication Required</td>
-        <td>The proxyAuthenticate parameter contains the value for the "Proxy-Authenticate" header (as required by <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.8">Section 10.4.8 of RFC 2616</a></td>).</td>
+        <td>The proxyAuthenticate parameter contains the value for the "Proxy-Authenticate" header.</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.8">10.4.8</a></td>
     </tr>
     <tr>
         <td>this.requestTimeout(contentType)</td>
         <td>408 Request Timeout</td>
         <td>&nbsp;</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.9">10.4.9</a></td>
     </tr>
     <tr>
         <td>this.conflict(contentType)</td>
         <td>409 Conflict</td>
         <td>&nbsp;</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.10">10.4.10</a></td>
     </tr>
     <tr>
         <td>this.gone(contentType)</td>
         <td>410 Gone</td>
         <td>&nbsp;</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.11">10.4.11</a></td>
     </tr>
     <tr>
         <td>this.lengthRequired(contentType)</td>
         <td>411 Length Required</td>
         <td>&nbsp;</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.12">10.4.12</a></td>
     </tr>
     <tr>
         <td>this.preconditionFailed(contentType)</td>
         <td>412 Precondition Failed</td>
         <td>&nbsp;</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.13">10.4.13</a></td>
     </tr>
     <tr>
         <td>this.requestEntityTooLarge(contentType, retryAfter?)</td>
         <td>413 Request Entity Too Large</td>
         <td>The optional retryAfter parameter is for the "Retry-After" parameter in case that the condition is temporary.</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.14">10.4.14</a></td>
     </tr>
     <tr>
         <td>this.requestURITooLong(contentType)</td>
         <td>414 Request-URI Too Long</td>
         <td>&nbsp;</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.15">10.4.15</a></td>
     </tr>
     <tr>
         <td>this.unsupportedMediaType(contentType)</td>
         <td>415 Unsupported Media Type</td>
         <td>&nbsp;</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.16">10.4.16</a></td>
     </tr>
     <tr>
         <td>this.requestedRangeNotSatisfiable(contentType, contentRange?)</td>
         <td>416 Requested Range Not Satisfiable</td>
         <td>The optional "contentRange" parameter contains the value for the "Content-Range" header.</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.17">10.4.17</a></td>
     </tr>
     <tr>
         <td>this.expectationFailed(contentType)</td>
         <td>417 Expectation Failed</td>
         <td>&nbsp;</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.18">10.4.18</a></td>
     </tr>
     <tr>
         <td>this.internalServerError(contentType)</td>
         <td>500 Internal Server Error</td>
         <td>&nbsp;</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.1">10.5.1</a></td>
     </tr>
     <tr>
         <td>this.notImplemented(contentType)</td>
         <td>501 Not Implemented</td>
         <td>&nbsp;</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.2">10.5.2</a></td>
     </tr>
     <tr>
         <td>this.badGateway(contentType)</td>
         <td>502 Bad Gateway</td>
         <td>&nbsp;</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.3">10.5.3</a></td>
     </tr>
     <tr>
         <td>this.serviceUnavailable(contentType)</td>
         <td>503 Service Unavailable</td>
         <td>&nbsp;</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.4">10.5.4</a></td>
     </tr>
     <tr>
         <td>this.gatewayTimeout(contentType)</td>
         <td>504 Gateway Timeout</td>
         <td>&nbsp;</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.5">10.5.5</a></td>
     </tr>
     <tr>
         <td>this.httpVersionNotSupport(contentType)</td>
         <td>505 HTTP Version Not Supported</td>
         <td>&nbsp;</td>
+        <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.6">10.5.6</a></td>
     </tr>
 </table>
 
