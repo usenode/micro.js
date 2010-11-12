@@ -1,8 +1,0 @@
-{
-    "name" : "micro.js",
-    "libraryNamespace" : "micro",
-    "version" : "0.1.2",
-    "platformDepends" : {
-	"socket.io-node" : [ ">=", "0.4.1" ]
-    }
-}

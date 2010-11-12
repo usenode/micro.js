@@ -1,0 +1,6 @@
+{
+    "name" : "micro",
+    "main" : "micro",
+    "version" : "0.1.3beta",
+    "directories" : { "lib" : "./lib" }
+}
