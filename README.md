@@ -20,7 +20,7 @@ Loading
 
 To load Micro.js:
 
-    var micro = require('micro/micro');
+    var micro = require('micro');
 
 Defining a Web Application
 --------------------------
@@ -165,6 +165,8 @@ The response object (the invocant to each action callback) has the following met
 ### Status and Type Shortcuts
 
 The following are shortcut methods for settting the status of the response and other header fields that are commonly returned with them (e.g. Content-Type). The most common are "ok", "notFound" and "internalServerError", although if you're an HTTP nut then anything you might want should be here (if it isn't raise a ticket/make a pull request).
+
+TODO - most of these are not implemented yet...
 
 <table>
     <tr>
