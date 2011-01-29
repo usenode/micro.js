@@ -1,0 +1,11 @@
+
+<~method pageTitle>500 Internal Server Error</~method>
+
+<h1>500 Internal Server Error</h1>
+
+<p class="error-message">
+   <%= this.args.error %>
+</p>
+
+: // TODO add stack trace
+
