@@ -356,7 +356,26 @@ TODO - most of these are not implemented yet...
 Views
 -----
 
-Pluggable views is an upcoming feature.
+Pluggable views is an upcoming feature. It is possible to use <a href="http://github.com/tomyan/spectrum.js">Spectrum.js</a> templates as follows:
+
+    var micro    = require('micro/micro'),
+        spectrum = require('spectrum');
+
+    var WebApp = exports.WebApp = micro.webapp(),
+        get = WebApp.get;
+
+    WebApp.prototype.init = function () {
+        this.view = new spectrum.Renderer(__dirname + '/../views');
+    };
+
+    get('/', function (request, response) {
+        return this.view.render('/index.spv', {}).then(function (output) {
+            response.ok('text/html');
+            return output;
+        });
+    });
+    
+    WebApp.handleStatic(__dirname.replace(/\/lib$/, '/static'));
 
 Copyright and Licensing
 =======================
