@@ -1,0 +1,8 @@
+
+<~method pageTitle>404 Not Found</~method>
+
+<h1>404 Not Found</h1>
+
+<p class="error-message">
+    The requested resource was not found on this server.
+</p>
