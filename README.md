@@ -29,7 +29,7 @@ To define a web application, use the <code>micro.webapp</code> factory function 
         get    = WebApp.get;
     
     get('/', function (request, response) {
-        this.ok('text/html');
+        response.ok('text/html');
         return 'hello, world!';
     });
 
@@ -348,7 +348,7 @@ TODO - most of these are not implemented yet...
     </tr>
     <tr>
         <td><a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.5.6">505 HTTP Version Not Supported</a></td>
-        <td><code>response.httpVersionNotSupport(contentType)</code></td>
+        <td><code>response.httpVersionNotSupported(contentType)</code></td>
         <td>&nbsp;</td>
     </tr>
 </table>
