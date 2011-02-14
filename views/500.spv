@@ -7,5 +7,5 @@
    <%= this.args.error %>
 </p>
 
-: // TODO add stack trace
+<pre><%= this.args.error.stack %></pre>
 
