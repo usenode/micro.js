@@ -8,7 +8,8 @@
     "directories"  : { "lib" : "./lib" },
     "dependencies" : {
         "proton"      : ">=0.2.0",
-        "promised-io" : ">=0.2.3"
+        "promised-io" : ">=0.2.3",
+        "spectrum"    : ">=0.3.0"
     },
     "repository" : {
         "type" : "git",
