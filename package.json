@@ -4,7 +4,7 @@
     "main"         : "./lib/micro",
     "engines"      : [ "node >=0.2.5" ],
     "version"      : "0.3.0",
-    "author"       : "Thomas Yandell <tom.deletethis@yandell.me.uk> (http://tomyandell.wordpress.com/)",
+    "author"       : "Thomas Yandell <tom.deletethis@yandell.me.uk> (http://tom.yandell.me.uk/blog/)",
     "directories"  : { "lib" : "./lib" },
     "dependencies" : {
         "proton"      : ">=0.2.0",
