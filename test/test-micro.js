@@ -49,8 +49,110 @@ exports["webapp can handle requests"] = function (test) {
 		test.done();
 	});
 	
-	var instance       = new Webapp(),
+	var instance = new Webapp();
+	instance.handle(mockReq);
+}
+
+exports["successful string response"] = function (test) {
+	
+	var Webapp            = micro.webapp(),
+	    successfulRequest = mockRequest('GET', '/test');
+	
+	Webapp.get('/test', function (request, response) {
+		response.ok("text/plain");
+		return "hello";
+	});
+	
+	var instance = new Webapp(),
+	    actualResponse = instance.handle(successfulRequest);
+	
+	test.ok(typeof actualResponse == 'object', "simple route that returns response from handle");
+	test.equals(200, actualResponse.status, "successful request sets 200 status on response");
+	test.done();
+}
+
+exports["not found string response"] = function (test) {
+	
+	var Webapp            = micro.webapp(),
+	    notfoundRequest = mockRequest('GET', '/test');
+	
+	Webapp.get('/test', function (request, response) {
+		response.notFound("text/plain");
+		return "";
+	});
+	
+	var instance = new Webapp(),
+	    actualResponse = instance.handle(notfoundRequest);
+	
+	test.equals(404, actualResponse.status, "not found request sets 404 status on response");
+	test.done();
+}
+
+exports["successful promise response"] = function (test) {
+	
+	var Webapp            = micro.webapp(),
+	    successfulRequest = mockRequest('GET', '/test');
+	
+	Webapp.get('/test', function (request, response) {
+		response.ok("text/plain");
+		var deferred = new Promise();
+		deferred.resolve("hello");
+		return deferred;
+	});
+	
+	var instance = new Webapp(),
+	    handledPromise = instance.handle(successfulRequest);
+	
+	handledPromise.then(function (actualResponse) {
+	
+		test.ok(typeof actualResponse == 'object', "simple route that returns response from handle");
+		test.equals(200, actualResponse.status, "successful request sets 200 status on response");
+		test.done();
+	});
+}
+
+exports["not found promise response resolved with empty string"] = function (test) {
+	
+	var Webapp          = micro.webapp(),
+	    notfoundRequest = mockRequest('GET', '/test');
+	
+	Webapp.get('/test', function (request, response) {
+		response.notFound("text/plain");
+		var deferred = new Promise();
+		deferred.resolve("");
+		return deferred;
+	});
+	
+	var instance = new Webapp(),
+	    handledPromise = instance.handle(notfoundRequest);
+	
+	handledPromise.then(function (actualResponse) {	
+		test.equals(404, actualResponse.status, "not found request sets 404 status on response");
+		test.done();
+	});
+}
+
+exports["promise response rejected returns internal server error"] = function (test) {
+	
+	var Webapp  = micro.webapp(),
+	    mockReq = mockRequest('GET', '/test');
+	
+	Webapp.get('/test', function (request, response) {
+		var deferred = new Promise();
+		deferred.reject({
+			"toString": function () {
+				return "some message"
+			},
+			"stack" : []
+		});
+		return deferred;
+	});
+	
+	var instance = new Webapp(),
 	    handledPromise = instance.handle(mockReq);
 	
-	test.ok(typeof handledPromise.then == 'function', "handle returns a promise");
+	handledPromise.then(function (actualResponse) {
+		test.equals(500, actualResponse.status, "rejected promise sets 500 status on response");
+		test.done();
+	});
 }
