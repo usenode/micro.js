@@ -38,16 +38,19 @@ exports["can create new Webapp"] = function (test) {
 exports["webapp can handle requests"] = function (test) {
 	//test.expect(2);
 	
-	var Webapp = micro.webapp();
+	var Webapp  = micro.webapp(),
+	    mockReq = mockRequest('GET', '/test');
 	
-	Webapp.get('/test', function () {
-		test.ok(true, 'handler callback executes');
+	Webapp.get('/test', function (request, response) {
+		test.ok("handler callback executes");
+		test.equals(mockReq, request, "route callback is passed the request");
+		test.ok(typeof response  == 'object', "route callback has a response object");
+		
 		test.done();
 	});
 	
 	var instance       = new Webapp(),
-	    request        = mockRequest('GET', '/test'),
-	    handledPromise = instance.handle(request);
+	    handledPromise = instance.handle(mockReq);
 	
-	test.ok(typeof handledPromise.then == 'function', "handle returns a promise");		
+	test.ok(typeof handledPromise.then == 'function', "handle returns a promise");
 }
