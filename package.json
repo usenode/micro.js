@@ -5,6 +5,9 @@
     "engines"      : [ "node >=0.2.5" ],
     "version"      : "0.3.0",
     "author"       : "Thomas Yandell <tom.deletethis@yandell.me.uk> (http://tomyandell.wordpress.com/)",
+    "contributors" : [
+        "Richard Hodgson <contact@rhodgson.co.uk>"
+    ],
     "directories"  : { "lib" : "./lib" },
     "dependencies" : {
         "proton"      : ">=0.2.0",
