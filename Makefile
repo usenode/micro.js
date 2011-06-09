@@ -1,6 +1,6 @@
 # npm install nodeunit
 test:
-	./node_modules/.bin/nodeunit ./test/test-*.js
+	./node_modules/.bin/litmus ./tests/suite.js
 
 clean:
 	rm -rf BUILD RPMS filelist
