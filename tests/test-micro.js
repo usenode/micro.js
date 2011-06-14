@@ -13,8 +13,9 @@ var litmus = require('litmus');
 
 exports.test = new litmus.Test('micro.js', function () {
     
-    var micro   = require('./../lib/micro.js'),
-        Promise = require('promised-io/lib/promise').Promise;
+    var micro    = require('./../lib/micro.js'),
+        Promise  = require('promised-io/lib/promise').Promise,
+        spectrum = require('spectrum');
     
     this.async('micro exports webapp', function (handle) {
         this.ok(typeof micro.webapp == 'function', "micro has a webapp factory");
@@ -169,21 +170,20 @@ exports.test = new litmus.Test('micro.js', function () {
             handle.finish();
         });
     });
-    /*
+
     this.async('handle public templates', function (handle) {
         
         var Webapp  = micro.webapp(),
             mockReq = mockRequest('GET', '/test');
         
-        Webapp.get('/test', function (request, response) {
-            var deferred = new Promise();
-            deferred.reject({
-                "toString": function () {
-                    return "some message"
-                },
-                "stack" : []
-            });
-            return deferred;
+        Webapp.prototype.init = function () {
+            this.view = new spectrum.Renderer(__dirname + '/mock/views');
+        };
+        
+        Webapp.handlePublicTemplates('.pub.spv', function (request, response, template) {
+            var content = template.render({});
+            response.ok('text/html');
+            return content;
         });
         
         var instance = new Webapp(),
@@ -192,10 +192,39 @@ exports.test = new litmus.Test('micro.js', function () {
         var test = this;
         
         handledPromise.then(function (actualResponse) {
-            test.is(500, actualResponse.status, "rejected promise sets 500 status on response");
+            test.is(200, actualResponse.status, "handled public template returns 200 status on response");
+            test.is(
+                "This is a test template.",
+                actualResponse.body[0],
+                "Response body contains rendered template"
+            );
             handle.finish();
         });
     });
     
-    */
+    this.async('handle public template returns 404 for missing template', function (handle) {
+        
+        var Webapp  = micro.webapp(),
+            mockReq = mockRequest('GET', '/a-page-that-does-not-exist');
+        
+        Webapp.prototype.init = function () {
+            this.view = new spectrum.Renderer(__dirname + '/mock/views');
+        };
+        
+        Webapp.handlePublicTemplates('.pub.spv', function (request, response, template) {
+            var content = template.render({});
+            response.ok('text/html');
+            return content;
+        });
+        
+        var instance = new Webapp(),
+            handledPromise = instance.handle(mockReq);
+        
+        var test = this;
+        
+        handledPromise.then(function (actualResponse) {
+            test.is(404, actualResponse.status, "handled public template returns 404 status on response");
+            handle.finish();
+        });
+    });
 });
