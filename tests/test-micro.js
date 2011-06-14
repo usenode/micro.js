@@ -11,13 +11,13 @@ function mockRequest (method, url) {
 
 var litmus = require('litmus');
 
-exports.test = new litmus.Test('test description', function () {
+exports.test = new litmus.Test('micro.js', function () {
     
     var micro   = require('./../lib/micro.js'),
         Promise = require('promised-io/lib/promise').Promise;
     
     this.async('micro exports webapp', function (handle) {
-        this.ok(typeof micro.webapp == 'function');
+        this.ok(typeof micro.webapp == 'function', "micro has a webapp factory");
         handle.finish();
     });
     
@@ -35,8 +35,8 @@ exports.test = new litmus.Test('test description', function () {
         var Webapp = micro.webapp();
         var instance = new Webapp;
         
-        this.ok(instance instanceof Webapp);
-        this.ok(typeof instance.handle == 'function');
+        this.ok(instance instanceof Webapp, "Can create instance of Webapp");
+        this.ok(typeof instance.handle == 'function', "Webapp instance has handle method");
         handle.finish();
     });
     
@@ -49,7 +49,7 @@ exports.test = new litmus.Test('test description', function () {
         var test = this;
         
         Webapp.get('/test', function (request, response) {
-            test.ok("handler callback executes");
+            test.ok(true, "handler callback executes");
             test.is(mockReq, request, "route callback is passed the request");
             test.ok(typeof response  == 'object', "route callback has a response object");
             
