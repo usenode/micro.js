@@ -3,7 +3,7 @@
     "description"  : "Micro is a micro framework along the same lines a Sinatra, running on top of Proton.js (hence JSGI).",
     "main"         : "./lib/micro",
     "engines"      : [ "node >=0.2.5" ],
-    "version"      : "0.3.0",
+    "version"      : "0.4.0",
     "author"       : "Thomas Yandell <tom.deletethis@yandell.me.uk> (http://tom.yandell.me.uk/blog/)",
     "contributors" : [
         "Richard Hodgson <contact@rhodgson.co.uk>"
