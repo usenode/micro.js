@@ -1,8 +1,8 @@
-
+# npm install nodeunit
 test:
-	echo TODO
+	./node_modules/.bin/litmus ./tests/suite.js
 
 clean:
 	rm -rf BUILD RPMS filelist
 
-
+.PHONY: test
