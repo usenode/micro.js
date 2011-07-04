@@ -58,7 +58,7 @@ exports.test = new litmus.Test('Micro Routing', function () {
         }
     }
 
-    test.plan(34);
+    test.plan(48);
 
     testRoute(
         '/',
@@ -96,6 +96,17 @@ exports.test = new litmus.Test('Micro Routing', function () {
         [ '/', '//', '/+', '/hello/', '/hello/hello' ]
     );
         
+    testRoute(
+        '/:named[a{3,4}]',
+        { '/aaa' : [ { named : 'aaa' } ], '/aaaa' : [ { named : 'aaaa' } ] },
+        [ '/', '/aa', '/aaaaa' ]
+    );
+
+    testRoute(
+        '/*[a{3,4}]',
+        { '/aaa' : [ 'aaa' ], '/aaaa' : [ 'aaaa' ] },
+        [ '/', '/aa', '/aaaaa' ]
+    );
 });
 
 
