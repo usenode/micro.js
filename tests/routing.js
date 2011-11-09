@@ -16,31 +16,33 @@ exports.test = new litmus.Test('Micro Routing', function () {
             });
         });
         function testResponseMatched (response, url, params) {
-            var handle = test.async('route: \'' + route + '\', url: \'' + url + '\''),
-                check = function (response) {
+            test.async('route: \'' + route + '\', url: \'' + url + '\'', function (done) {
+                var check = function (response) {
                     test.ok(response.status === 200, 'route \'' + route + '\' should match \'' + url + '\'');
                     test.is(response.body, [ params ], 'params for route \'' + route + '\' applied to \'' + url + '\'');
-                    handle.finish();
+                    done.resolve();
                 };
-            if (response.then) {
-                response.then(check);
-            }
-            else {
-                check(response);
-            }
+                if (response.then) {
+                    response.then(check);
+                }
+                else {
+                    check(response);
+                }
+            });
         }
         function testResponseDidNotMatch (response, url) {
-            var handle = test.async('route: \'' + route + '\', url: \'' + url + '\''),
-                check = function (response) {
+            test.async('route: \'' + route + '\', url: \'' + url + '\'', function (done) {
+                var check = function (response) {
                     test.ok(response.status === 404, 'route \'' + route + '\' should not match \'' + url + '\'');
-                    handle.finish();
+                    done.resolve();
                 };
-            if (response.then) {
-                response.then(check);
-            }
-            else {
-                check(response);
-            }
+                if (response.then) {
+                    response.then(check);
+                }
+                else {
+                    check(response);
+                }
+            });
         }
         var webapp = new WebApp();
         for (var i in shouldMatch) { 

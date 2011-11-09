@@ -14,34 +14,34 @@ var litmus = require('litmus');
 exports.test = new litmus.Test('micro.js', function () {
     
     var micro    = require('./../lib/micro.js'),
-        Promise  = require('promised-io/lib/promise').Promise,
+        Promise  = require('promised-io/promise').Promise,
         spectrum = require('spectrum');
     
-    this.async('micro exports webapp', function (handle) {
+    this.async('micro exports webapp', function (done) {
         this.ok(typeof micro.webapp == 'function', "micro has a webapp factory");
-        handle.finish();
+        done.resolve();
     });
     
-    this.async('micro.webapp() returns a Webapp', function (handle) {
+    this.async('micro.webapp() returns a Webapp', function (done) {
         var Webapp = micro.webapp();
         this.ok(typeof Webapp      == 'function', "Webapp can be constructed");
         this.ok(typeof Webapp.get  == 'function', "Webapp has a get handler");
         this.ok(typeof Webapp.post == 'function', "Webapp has a post handler");
         this.ok(typeof Webapp.put  == 'function', "Webapp has a put handler");
         this.ok(typeof Webapp.del  == 'function', "Webapp has a delete handler");
-        handle.finish();
+        done.resolve();
     });
     
-    this.async('can create new Webapp', function (handle) {
+    this.async('can create new Webapp', function (done) {
         var Webapp = micro.webapp();
         var instance = new Webapp;
         
         this.ok(instance instanceof Webapp, "Can create instance of Webapp");
         this.ok(typeof instance.handle == 'function', "Webapp instance has handle method");
-        handle.finish();
+        done.resolve();
     });
     
-    this.async('webapp can handle requests', function (handle) {
+    this.async('webapp can handle requests', function (done) {
         //this.expect(2);
         
         var Webapp  = micro.webapp(),
@@ -54,14 +54,14 @@ exports.test = new litmus.Test('micro.js', function () {
             test.is(mockReq, request, "route callback is passed the request");
             test.ok(typeof response  == 'object', "route callback has a response object");
             
-            handle.finish();
+            done.resolve();
         });
         
         var instance = new Webapp();
         instance.handle(mockReq);
     });
     
-    this.async('successful string response', function (handle) {
+    this.async('successful string response', function (done) {
         
         var Webapp            = micro.webapp(),
             successfulRequest = mockRequest('GET', '/test');
@@ -76,10 +76,10 @@ exports.test = new litmus.Test('micro.js', function () {
         
         this.ok(typeof actualResponse == 'object', "simple route that returns response from handle");
         this.is(200, actualResponse.status, "successful request sets 200 status on response");
-        handle.finish();
+        done.resolve();
     });
     
-    this.async('not found string response', function (handle) {
+    this.async('not found string response', function (done) {
         
         var Webapp            = micro.webapp(),
             notfoundRequest = mockRequest('GET', '/test');
@@ -93,10 +93,10 @@ exports.test = new litmus.Test('micro.js', function () {
             actualResponse = instance.handle(notfoundRequest);
         
         this.is(404, actualResponse.status, "not found request sets 404 status on response");
-        handle.finish();
+        done.resolve();
     });
     
-    this.async('successful promise response', function (handle) {
+    this.async('successful promise response', function (done) {
         
         var Webapp            = micro.webapp(),
             successfulRequest = mockRequest('GET', '/test');
@@ -117,11 +117,11 @@ exports.test = new litmus.Test('micro.js', function () {
         
             test.ok(typeof actualResponse == 'object', "simple route that returns response from handle");
             test.is(200, actualResponse.status, "successful request sets 200 status on response");
-            handle.finish();
+            done.resolve();
         });
     });
     
-    this.async('not found promise response resolved with empty string', function (handle) {
+    this.async('not found promise response resolved with empty string', function (done) {
         
         var Webapp          = micro.webapp(),
             notfoundRequest = mockRequest('GET', '/test');
@@ -140,11 +140,11 @@ exports.test = new litmus.Test('micro.js', function () {
         
         handledPromise.then(function (actualResponse) {    
             test.is(404, actualResponse.status, "not found request sets 404 status on response");
-            handle.finish();
+            done.resolve();
         });
     });
     
-    this.async('promise response rejected returns internal server error', function (handle) {
+    this.async('promise response rejected returns internal server error', function (done) {
         
         var Webapp  = micro.webapp(),
             mockReq = mockRequest('GET', '/test');
@@ -167,11 +167,11 @@ exports.test = new litmus.Test('micro.js', function () {
         
         handledPromise.then(function (actualResponse) {
             test.is(500, actualResponse.status, "rejected promise sets 500 status on response");
-            handle.finish();
+            done.resolve();
         });
     });
 
-    this.async('handle public templates', function (handle) {
+    this.async('handle public templates', function (done) {
         
         var Webapp  = micro.webapp(),
             mockReq = mockRequest('GET', '/test');
@@ -198,11 +198,11 @@ exports.test = new litmus.Test('micro.js', function () {
                 actualResponse.body[0],
                 "Response body contains rendered template"
             );
-            handle.finish();
+            done.resolve();
         });
     });
     
-    this.async('handle public template returns 404 for missing template', function (handle) {
+    this.async('handle public template returns 404 for missing template', function (done) {
         
         var Webapp  = micro.webapp(),
             mockReq = mockRequest('GET', '/a-page-that-does-not-exist');
@@ -224,7 +224,7 @@ exports.test = new litmus.Test('micro.js', function () {
         
         handledPromise.then(function (actualResponse) {
             test.is(404, actualResponse.status, "handled public template returns 404 status on response");
-            handle.finish();
+            done.resolve();
         });
     });
 });
