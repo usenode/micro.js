@@ -15,6 +15,6 @@ publish:
 	git tag v$$new_version && \
 	git push origin master && \
 	git push --tags && \
-	npm publish https://github.com/tomyan/micro.js/tarball/v$$new_version
+	npm publish https://github.com/usenode/micro.js/tarball/v$$new_version
 
 .PHONY: test
