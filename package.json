@@ -19,7 +19,7 @@
     },
     "repository" : {
         "type" : "git",
-        "url"  : "http://github.com/tomyan/micro.js.git"
+        "url"  : "http://github.com/usenode/micro.js.git"
     },
-    "homepage" : "http://github.com/tomyan/micro.js"
+    "homepage" : "http://github.com/usenode/micro.js"
 }
