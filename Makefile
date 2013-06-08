@@ -1,6 +1,8 @@
 
+TEST=tests/suite.js
+
 test:
-	./node_modules/.bin/litmus ./tests/suite.js
+	./node_modules/.bin/litmus $(TEST)
 
 ./node_modules/.bin/usenode-release:
 	npm install --dev

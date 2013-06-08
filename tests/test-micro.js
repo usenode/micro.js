@@ -1,22 +1,23 @@
 
-/**
- * Mock a JSGI request object
- */
-function mockRequest (method, url) {
-    var request = {};
-    request["method"] = method;
-    request.pathInfo = url;
-    return request;
+var litmus   = require('litmus'),
+    micro    = require('../lib/micro');
+    Promise  = require('promised-io/promise').Promise,
+    spectrum = require('spectrum');
+
+function testWebapp (method, url, setup, test) {
+
+
+    setup(Webapp, Webapp.get);
+
+    webapp.handle(request, response);
+
+    test(request, response);
 }
 
-var litmus = require('litmus');
+module.exports = new litmus.Test(module, function () {
+    
+    var test = this;
 
-exports.test = new litmus.Test('micro.js', function () {
-    
-    var micro    = require('./../lib/micro.js'),
-        Promise  = require('promised-io/promise').Promise,
-        spectrum = require('spectrum');
-    
     this.async('micro exports webapp', function (done) {
         this.ok(typeof micro.webapp == 'function', "micro has a webapp factory");
         done.resolve();
@@ -42,189 +43,28 @@ exports.test = new litmus.Test('micro.js', function () {
     });
     
     this.async('webapp can handle requests', function (done) {
-        //this.expect(2);
-        
-        var Webapp  = micro.webapp(),
-            mockReq = mockRequest('GET', '/test');
-        
-        var test = this;
-        
+        var passedRequest,
+            passedResponse,
+            mockRequest = {
+                url    : '/test',
+                method : 'GET'
+            },
+            mockResponse = {},
+            Webapp = micro.webapp();
+            webapp = new Webapp,
+            get = Webapp.get;
+
         Webapp.get('/test', function (request, response) {
-            test.ok(true, "handler callback executes");
-            test.is(mockReq, request, "route callback is passed the request");
-            test.ok(typeof response  == 'object', "route callback has a response object");
-            
-            done.resolve();
+            passedRequest = mockRequest;
+            passedResponse = mockResponse
         });
-        
-        var instance = new Webapp();
-        instance.handle(mockReq);
-    });
-    
-    this.async('successful string response', function (done) {
-        
-        var Webapp            = micro.webapp(),
-            successfulRequest = mockRequest('GET', '/test');
-        
-        Webapp.get('/test', function (request, response) {
-            response.ok("text/plain");
-            return "hello";
-        });
-        
-        var instance = new Webapp(),
-            actualResponse = instance.handle(successfulRequest);
-        
-        this.ok(typeof actualResponse == 'object', "simple route that returns response from handle");
-        this.is(200, actualResponse.status, "successful request sets 200 status on response");
+
+        (new Webapp).handle(mockRequest, mockResponse);
+
+        test.ok(mockRequest === passedRequest, "request passed in");
+        test.ok(mockResponse === passedResponse, "request passed in");
+
         done.resolve();
-    });
-    
-    this.async('not found string response', function (done) {
-        
-        var Webapp            = micro.webapp(),
-            notfoundRequest = mockRequest('GET', '/test');
-        
-        Webapp.get('/test', function (request, response) {
-            response.notFound("text/plain");
-            return "";
-        });
-        
-        var instance = new Webapp(),
-            actualResponse = instance.handle(notfoundRequest);
-        
-        this.is(404, actualResponse.status, "not found request sets 404 status on response");
-        done.resolve();
-    });
-    
-    this.async('successful promise response', function (done) {
-        
-        var Webapp            = micro.webapp(),
-            successfulRequest = mockRequest('GET', '/test');
-        
-        Webapp.get('/test', function (request, response) {
-            response.ok("text/plain");
-            var deferred = new Promise();
-            deferred.resolve("hello");
-            return deferred;
-        });
-        
-        var instance = new Webapp(),
-            handledPromise = instance.handle(successfulRequest);
-        
-        var test = this;
-        
-        handledPromise.then(function (actualResponse) {
-        
-            test.ok(typeof actualResponse == 'object', "simple route that returns response from handle");
-            test.is(200, actualResponse.status, "successful request sets 200 status on response");
-            done.resolve();
-        });
-    });
-    
-    this.async('not found promise response resolved with empty string', function (done) {
-        
-        var Webapp          = micro.webapp(),
-            notfoundRequest = mockRequest('GET', '/test');
-        
-        Webapp.get('/test', function (request, response) {
-            response.notFound("text/plain");
-            var deferred = new Promise();
-            deferred.resolve("");
-            return deferred;
-        });
-        
-        var instance = new Webapp(),
-            handledPromise = instance.handle(notfoundRequest);
-        
-        var test = this;
-        
-        handledPromise.then(function (actualResponse) {    
-            test.is(404, actualResponse.status, "not found request sets 404 status on response");
-            done.resolve();
-        });
-    });
-    
-    this.async('promise response rejected returns internal server error', function (done) {
-        
-        var Webapp  = micro.webapp(),
-            mockReq = mockRequest('GET', '/test');
-        
-        Webapp.get('/test', function (request, response) {
-            var deferred = new Promise();
-            deferred.reject({
-                "toString": function () {
-                    return "some message"
-                },
-                "stack" : []
-            });
-            return deferred;
-        });
-        
-        var instance = new Webapp(),
-            handledPromise = instance.handle(mockReq);
-        
-        var test = this;
-        
-        handledPromise.then(function (actualResponse) {
-            test.is(500, actualResponse.status, "rejected promise sets 500 status on response");
-            done.resolve();
-        });
     });
 
-    this.async('handle public templates', function (done) {
-        
-        var Webapp  = micro.webapp(),
-            mockReq = mockRequest('GET', '/test');
-        
-        Webapp.prototype.init = function () {
-            this.view = new spectrum.Renderer(__dirname + '/mock/views');
-        };
-        
-        Webapp.handlePublicTemplates('.pub.spv', function (request, response, template) {
-            var content = template.render({});
-            response.ok('text/html');
-            return content;
-        });
-        
-        var instance = new Webapp(),
-            handledPromise = instance.handle(mockReq);
-        
-        var test = this;
-        
-        handledPromise.then(function (actualResponse) {
-            test.is(200, actualResponse.status, "handled public template returns 200 status on response");
-            test.is(
-                "This is a test template.",
-                actualResponse.body[0],
-                "Response body contains rendered template"
-            );
-            done.resolve();
-        });
-    });
-    
-    this.async('handle public template returns 404 for missing template', function (done) {
-        
-        var Webapp  = micro.webapp(),
-            mockReq = mockRequest('GET', '/a-page-that-does-not-exist');
-        
-        Webapp.prototype.init = function () {
-            this.view = new spectrum.Renderer(__dirname + '/mock/views');
-        };
-        
-        Webapp.handlePublicTemplates('.pub.spv', function (request, response, template) {
-            var content = template.render({});
-            response.ok('text/html');
-            return content;
-        });
-        
-        var instance = new Webapp(),
-            handledPromise = instance.handle(mockReq);
-        
-        var test = this;
-        
-        handledPromise.then(function (actualResponse) {
-            test.is(404, actualResponse.status, "handled public template returns 404 status on response");
-            done.resolve();
-        });
-    });
 });

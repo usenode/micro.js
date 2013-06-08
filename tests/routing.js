@@ -2,24 +2,24 @@
 var litmus = require('litmus'),
     micro  = require('../lib/micro');
 
-exports.test = new litmus.Test('Micro Routing', function () {
+module.exports = new litmus.Test(module, function () {
     var test = this;
 
     function testRoute (route, shouldMatch, shouldNotMatch) {
-        var WebApp = micro.webapp(function () {
-            this.get(route, function (request, response) {
-                response.ok('text/plain');
-                var params = Array.prototype.slice.apply(arguments);
-                params.shift();
-                params.shift();
-                return params;
-            });
+        var Webapp = micro.webapp();
+        Webapp.get(route, function (request, response) {
+            var params = Array.prototype.slice.apply(arguments);
+            params.shift();
+            params.shift();
+            params.shift();
+            response.handled = true;
+            response.params = params;
         });
         function testResponseMatched (response, url, params) {
             test.async('route: \'' + route + '\', url: \'' + url + '\'', function (done) {
                 var check = function (response) {
-                    test.ok(response.status === 200, 'route \'' + route + '\' should match \'' + url + '\'');
-                    test.is(response.body, [ params ], 'params for route \'' + route + '\' applied to \'' + url + '\'');
+                    test.ok(response.handled, 'route \'' + route + '\' should match \'' + url + '\'');
+                    test.is(response.params, params, 'params for route \'' + route + '\' applied to \'' + url + '\'');
                     done.resolve();
                 };
                 if (response.then) {
@@ -33,7 +33,7 @@ exports.test = new litmus.Test('Micro Routing', function () {
         function testResponseDidNotMatch (response, url) {
             test.async('route: \'' + route + '\', url: \'' + url + '\'', function (done) {
                 var check = function (response) {
-                    test.ok(response.status === 404, 'route \'' + route + '\' should not match \'' + url + '\'');
+                    test.nok(response.handled, 'route \'' + route + '\' should not match \'' + url + '\'');
                     done.resolve();
                 };
                 if (response.then) {
@@ -44,17 +44,21 @@ exports.test = new litmus.Test('Micro Routing', function () {
                 }
             });
         }
-        var webapp = new WebApp();
-        for (var i in shouldMatch) { 
+        var webapp = new Webapp(), response;
+        for (var i in shouldMatch) {
+            response = {};
+            webapp.handle({ method: 'GET', url: i }, response);
             testResponseMatched(
-                webapp.handle({ method: 'GET', pathInfo: i }),
+                response,
                 i,
                 shouldMatch[i]
             );
         }
         for (var i = 0, l = shouldNotMatch.length; i < l; i++) {
+            response = {};
+            webapp.handle({ method: 'GET', url: shouldNotMatch[i] }, response);
             testResponseDidNotMatch(
-                webapp.handle({ method: 'GET', pathInfo: shouldNotMatch[i] }),
+                response,
                 shouldNotMatch[i]
             );
         }
