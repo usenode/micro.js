@@ -3,20 +3,24 @@
     "description"  : "Micro is a micro framework along the same lines a Sinatra, running on top of Proton.js (hence JSGI).",
     "main"         : "./lib/micro",
     "engines"      : [ "node >=0.2.5" ],
-    "version"      : "0.5.2",
+    "version"      : "0.5.3",
     "author"       : "Thomas Yandell <tom.deletethis@yandell.me.uk> (http://tom.yandell.me.uk/blog/)",
     "contributors" : [
         "Richard Hodgson <contact@rhodgson.co.uk>"
     ],
     "directories"  : { "lib" : "./lib" },
     "dependencies" : {
-        "proton"      : ">=0.2.0",
-        "promised-io" : ">=0.2.3",
+        "proton"      : ">=0.5.0",
+        "promised-io" : ">=0.3.0",
         "spectrum"    : ">=0.3.0"
+    },
+    "devDependencies" : {
+        "litmus"          : ">=0.6.2",
+        "usenode-release" : ">=1.0.0"
     },
     "repository" : {
         "type" : "git",
-        "url"  : "http://github.com/tomyan/micro.js.git"
+        "url"  : "http://github.com/usenode/micro.js.git"
     },
-    "homepage" : "http://github.com/tomyan/micro.js"
+    "homepage" : "http://github.com/usenode/micro.js"
 }
