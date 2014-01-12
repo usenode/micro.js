@@ -67,4 +67,53 @@ module.exports.test = new litmus.Test('webapp', function () {
         done.resolve();
     });
 
+    this.async('webapp can handle static requests', function (done) {
+        var Webapp = micro.webapp();
+
+        function assertResponse (url, expectedStatus, expectedContentType) {
+
+            var actualStatus  = 0,
+                actualHeaders = {},
+                mockRequest   = {
+                    url: url,
+                    method: 'GET'
+                },
+                mockResponse  = {
+                    write : function () {},
+                    end : function () {},
+                    writeHead : function (status, headers) {
+                        actualStatus  = status;
+                        actualHeaders = headers;
+                    }
+                };
+
+            (new Webapp).handle(mockRequest, mockResponse);
+
+            test.is(
+                actualStatus,
+                expectedStatus,
+                "'" + url + "' responds with " + expectedStatus + " status code"
+            );
+
+            test.is(
+                actualHeaders['Content-Type'],
+                expectedContentType,
+                "'" + url + "' responds with " + expectedContentType + " Content-Type."
+            )
+        }
+        
+        Webapp.handleStatic(__dirname + '/mock/static');
+
+        assertResponse('/image.png',  200, 'image/png');
+        assertResponse('/image.jpg',  200, 'image/jpeg');
+        assertResponse('/image.jpeg', 200, 'image/jpeg');
+        assertResponse('/image.gif',  200, 'image/gif');
+        assertResponse('/style.css',  200, 'text/css');
+        assertResponse('/script.js',  200, 'text/javascript');
+        assertResponse('/player.swf', 200, 'application/x-shockwave-flash');
+        assertResponse('/index.html', 200, 'text/html');
+
+        done.resolve();
+    });
+
 });
