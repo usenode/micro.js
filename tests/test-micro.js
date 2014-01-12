@@ -112,6 +112,12 @@ module.exports.test = new litmus.Test('webapp', function () {
         assertResponse('/script.js',  200, 'text/javascript');
         assertResponse('/player.swf', 200, 'application/x-shockwave-flash');
         assertResponse('/index.html', 200, 'text/html');
+        assertResponse('/font.eot',   200, 'font/eot');
+        assertResponse('/font.otf',   200, 'font/otf');
+        assertResponse('/font.svg',   200, 'image/svg+xml');
+        assertResponse('/font.ttf',   200, 'font/ttf');
+        assertResponse('/font.woff',  200, 'font/woff');
+
 
         done.resolve();
     });
