@@ -2,7 +2,7 @@
 var litmus = require('litmus'),
     micro  = require('../lib/micro');
 
-module.exports = new litmus.Test(module, function () {
+module.exports.test = new litmus.Test('routing', function () {
     var test = this;
 
     function testRoute (route, shouldMatch, shouldNotMatch) {
