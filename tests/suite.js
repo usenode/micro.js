@@ -2,7 +2,7 @@
 var litmus = require('litmus');
 
 module.exports = new litmus.Suite(module, [
-    require('./test-micro'),
+    require('./micro'),
     require('./routing')
 ]);
 
