@@ -14,7 +14,7 @@ function testWebapp (method, url, setup, test) {
     test(request, response);
 }
 
-module.exports.test = new litmus.Test('webapp', function () {
+module.exports = new litmus.Test(module, function () {
     
     var test = this;
 
